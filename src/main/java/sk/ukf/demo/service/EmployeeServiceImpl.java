@@ -3,30 +3,39 @@ package sk.ukf.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sk.ukf.demo.dao.EmployeeDAO;
 import sk.ukf.demo.entity.Employee;
-import sk.ukf.demo.service.EmployeeService;
+import sk.ukf.demo.repository.EmployeeRepository;
 
 import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private EmployeeDAO employeeDAO;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeDAO employeeDAO) {
-        this.employeeDAO = employeeDAO;
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
+
     @Override
     public List<Employee> findAll() {
-        return employeeDAO.findAll();
+        return employeeRepository.findAll();
     }
 
-    public Employee findById(int id) { return  employeeDAO.findById(id); }
+    @Override
+    public Employee findById(int id) {
+        return employeeRepository.findById(id).orElse(null);
+    }
 
     @Transactional
-    public Employee save(Employee employee) { return  employeeDAO.save(employee); }
+    @Override
+    public Employee save(Employee employee) {
+        return employeeRepository.save(employee);
+    }
 
     @Transactional
-    public void deleteById(int id) { employeeDAO.deleteById(id); }
+    @Override
+    public void deleteById(int id) {
+        employeeRepository.deleteById(id);
+    }
 }
