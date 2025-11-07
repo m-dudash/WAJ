@@ -22,6 +22,7 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
+    @NotBlank(message = "Email cannot be empty")
     @Pattern(
             regexp = "^[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,253}\\.[A-Za-z]{2,}$",
             message = "Invalid email"
@@ -29,21 +30,34 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
+    @NotBlank(message = "Phone cannot be empty")
     @Pattern(regexp = "\\+?[0-9]{10,15}", message = "Invalid phone number")
     @Column(name = "phone")
     private String phone;
 
+    @NotBlank(message = "Birth date cannot be empty")
+    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Birth date must be in format YYYY-MM-DD")
     @Column(name = "birth_date")
     private String birth_date;
 
+    @NotBlank(message = "Job title cannot be empty")
+    @Length(max = 100, message = "Job title max size is 100 characters")
     @Column(name = "job_title")
     private String job_title;
 
+    @NotNull(message = "Salary cannot be null")
+    @DecimalMin(value = "0.0", inclusive = true, message = "Salary must be >= 0")
+    @Digits(integer = 12, fraction = 2, message = "Salary must be a valid monetary amount")
     @Column(name = "salary")
     private Double salary;
 
+    @NotBlank(message = "Employment type cannot be empty")
+    @Pattern(
+            regexp = "Plny uvazok|Ciastocny uvazok|Dohoda|Stazista/Praktikant",
+            message = "Employment type must be one of predefined values"
+    )
     @Column(name = "full_time")
-    private String full_time;  // Changed from boolean to String
+    private String full_time;  // String, привязан к списку employmentTypes
 
     public int getId() {
         return id;

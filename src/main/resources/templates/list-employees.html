@@ -88,6 +88,8 @@
             <td th:text="${employee.email}"></td>
             <td th:text="${employee.job_title}"></td>
             <td>
+                <a th:href="@{/employees/edit/{id}(id=${employee.id})}"
+                   class="btn btn-secondary btn-sm me-2">Edit</a>
                 <a th:href="@{/employees/delete/{id}(id=${employee.id})}"
                    class="btn btn-danger btn-sm"
                    onclick="return confirm('Ste si istý?')">Odstrániť</a>

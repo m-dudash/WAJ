@@ -48,6 +48,17 @@ public class EmployeeController {
         model.addAttribute("employmentTypes", employmentTypes);
         return "employee-form";
     }
+    @GetMapping("/employees/edit/{id}")
+    public String showEditForm(@PathVariable int id, Model model) {
+        Employee employee = employeeService.findById(id);
+        if (employee == null) {
+            return "redirect:/";
+        }
+        model.addAttribute("employee", employee);
+        model.addAttribute("jobTitles", jobTitles);
+        model.addAttribute("employmentTypes", employmentTypes);
+        return "employee-form";
+    }
 
     @PostMapping("/employees/save")
     public String saveEmployee(@Valid @ModelAttribute("employee") Employee employee,
